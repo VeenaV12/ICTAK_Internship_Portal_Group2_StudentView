@@ -1,0 +1,27 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "Backend/package.json",
+        "use": "@vercel/node",
+        "config": {
+          "includeFiles": ["Backend/Uploads/**"]
+        }
+      }
+    ],
+    "routes": [
+      {
+        "src": "/api/(.*)",
+        "dest": "/Backend/api/$1"
+      },
+      {
+        "src": "/uploads/(.*)",
+        "dest": "/Backend/Uploads/$1"
+      },
+      {
+        "src": "/(.*)",
+        "dest": "/Backend/app.js"
+      }
+    ]
+  }
+  
