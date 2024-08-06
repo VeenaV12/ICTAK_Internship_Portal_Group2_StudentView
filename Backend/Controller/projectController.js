@@ -7,25 +7,27 @@ const getProject = async (req, res) => {
   try {
     const userId = req.user.userId; 
     
-    
+    // Find the user by ID
     const user = await User.findById(userId);
-
     if (!user || !user.project) {
       return res.status(404).json({ message: 'Project not found for this user' });
     }
     
-    
     const projectId = user.project;
-
+    
+    // Find the project by ID
     const project = await Project.findById(projectId);
-
     if (!project) {
       return res.status(404).json({ message: 'Project details not found' });
     }
     
-   
+    // Check if PDF path exists
     if (project.pdf && project.pdf.path) {
-      return res.status(200).json({ pdf: project.pdf.path });
+      // Return project name and PDF path
+      return res.status(200).json({
+        projectName: project.projectName,  // Assuming the project schema has a 'name' field
+        pdfPath: project.pdf.path
+      });
     } else {
       return res.status(404).json({ message: 'PDF path not found for this project' });
     }
